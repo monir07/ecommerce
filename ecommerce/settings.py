@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY") #'django-insecure-zd&ez9q(u2-zj8ffja4&_c#xg&$yd&v)!o5_l!@2g+4s5ii4kz'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -30,7 +30,7 @@ DEFAULTS_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-LOCAL_APPS = ['account']
+LOCAL_APPS = ['account', 'eshop']
 THIRD_PARTY_APPS = ['crispy_forms']
 INSTALLED_APPS = DEFAULTS_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
