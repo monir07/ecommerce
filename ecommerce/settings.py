@@ -30,7 +30,7 @@ DEFAULTS_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-LOCAL_APPS = ['account', 'eshop']
+LOCAL_APPS = ['account', 'eshop', 'cart']
 THIRD_PARTY_APPS = ['crispy_forms']
 INSTALLED_APPS = DEFAULTS_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
@@ -59,6 +59,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processor.cart'
             ],
         },
     },
@@ -137,3 +138,6 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'alert alert-success',
     messages.ERROR: 'alert alert-danger',
 }
+
+SESSION_COOKIE_AGE = 8640
+CART_ID = 'cart'

@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
+from django.core import validators
 from account.validator import image_validator
+
 User = get_user_model()
 
 # Create your models here.
@@ -32,7 +35,7 @@ class Category(BaseModel):
 class Product(BaseModel):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     title = models.CharField(max_length=300, unique=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(max_length=255, unique=True)
     featured = models.BooleanField(default=False)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     description = models.TextField(blank=True)
@@ -66,3 +69,16 @@ class Slider(BaseModel):
 
     def __str__(self):
         return self.title
+
+
+class QueryMessage(models.Model):
+    name = models.CharField(max_length=30)
+    email_address = models.EmailField(_("email address"), max_length=50, validators=[validators.EmailValidator,], unique=True)
+    subject = models.CharField(_("subject"), max_length=150)
+    messages = models.TextField(max_length=250)
+
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
+
+    def __str__(self):
+        return self.subject

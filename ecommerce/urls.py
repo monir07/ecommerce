@@ -15,7 +15,8 @@ urlpatterns = [
 
     # eshop urls
     path('', HomeView.as_view()),
-    path('shop/', include('eshop.urls'))
+    path('shop/', include('eshop.urls')),
+    path('cart/', include('cart.urls'))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # ADMIN PANEL HEADER AND TITLE TEXT CHANGE.
