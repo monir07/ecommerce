@@ -93,28 +93,3 @@ class ContactUsCreateView(generic.CreateView):
         context['basic_template'] = ""
         return context
 
-
-class ShopingCartListView(generic.ListView):
-    permission_required = 'eshop.view_product'
-    model = Product
-    context_object_name = 'items'
-    paginate_by = 9
-    template_name = 'eshop/cart.html'
-    queryset = Product.objects.all()
-    search_fields = ['title', 'category__title']
-    """ 
-    def get(self, request, *args, **kwargs):
-        cart_items = Cart(self.request)
-        print(cart_items.cart)
-        return super().get(request, *args, **kwargs)
-    """
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        
-        query_param = self.request.GET.copy()
-        search_param = query_param.get('query', None)
-        if search_param:
-            Qr = format_search_string(self.search_fields, search_param)
-            queryset = queryset.filter(Qr)
-
-        return queryset

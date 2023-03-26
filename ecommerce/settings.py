@@ -59,7 +59,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'cart.context_processor.cart'
+                'cart.context_processor.cart',
+                'cart.context_processor.cart_amount'
             ],
         },
     },
@@ -137,7 +138,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MESSAGE_TAGS = {
     messages.SUCCESS: 'alert alert-success',
     messages.ERROR: 'alert alert-danger',
+    messages.WARNING: 'alert alert-warning',
 }
 
 SESSION_COOKIE_AGE = 8640
 CART_ID = 'cart'
+COUPON_ID = 'coupon'

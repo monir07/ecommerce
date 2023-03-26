@@ -1,12 +1,16 @@
 from django.conf import settings 
 from eshop.models import Product
+from .models import Coupon
 
 class Cart(object):
     def __init__(self, request):
         self.session = request.session
         self.cart_id = settings.CART_ID
+        self.coupon_id = settings.COUPON_ID
         cart = self.session.get(self.cart_id)
+        coupon = self.session.get(self.coupon_id)
         self.cart = self.session[self.cart_id] = cart if cart else {}
+        self.coupon = self.session[self.coupon_id] = coupon if coupon else None
 
     def update(self, product_id, quantity=1):
         product = Product.objects.get(id=product_id)
@@ -20,6 +24,9 @@ class Cart(object):
         
         self.save()
 
+    def add_coupon(self, coupon_id):
+        self.session[self.coupon_id] = coupon_id
+        self.save()
 
     def __iter__(self):
         products = Product.objects.filter(id__in=list(self.cart.keys()))
@@ -42,3 +49,36 @@ class Cart(object):
     
     def __len__(self):
         return len(list(self.cart.keys()))
+    
+    def clear(self):
+        try:
+            del self.session[self.cart_id]
+            del self.session[self.coupon_id]
+        except:
+            pass
+        self.save()
+
+    def actual_total(self):
+        amount = sum(product['sub_total'] for product in self.cart.values())
+        return amount
+    
+    def total_discount(self):
+        amount = sum(product['sub_total'] for product in self.cart.values())
+        if self.coupon:
+            coupon = Coupon.objects.get(id=self.coupon)
+            if self.actual_total() > coupon.required_amount_use_coupon:
+                discount = amount * (coupon.discount / 100)
+                return discount
+            else:
+                return 0
+        else:
+            return None
+    
+    def grand_total(self):
+        amount = sum(product['sub_total'] for product in self.cart.values())
+        shipping = 10
+        if self.coupon:
+            coupon = Coupon.objects.get(id=self.coupon)
+            if self.actual_total() > coupon.required_amount_use_coupon:
+                amount -= amount * (coupon.discount / 100)
+        return amount + shipping
