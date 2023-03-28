@@ -57,6 +57,11 @@ class Cart(object):
         except:
             pass
         self.save()
+    
+    def restore_after_logout(self, current_cart={}, current_coupon=None):
+        self.cart = self.session[self.cart_id]=current_cart
+        self.coupon = self.session[self.coupon_id]=current_coupon
+        self.save()
 
     def actual_total(self):
         amount = sum(product['sub_total'] for product in self.cart.values())
