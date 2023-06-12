@@ -99,6 +99,51 @@
     //         }
     //         button.parent().parent().find('input').val(newVal);
     //     });
-
 })(jQuery);
+
+
+const GetCategoryFilter = (argv) => {
+    const params = {
+        category: argv,
+        // param2: 'value2'
+    };
+
+    const url = `/shop/product-filter/?${new URLSearchParams(params)}`;
+    console.log('api called');
+    // if (argv.length > 0) {
+    //     window.location.href = url;
+    // }
+    // fetch api called
+    fetch(url)
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
+}
+
+
+// Get all checkboxes with the name attribute "category"
+var checkboxes = document.querySelectorAll('input[name="category"]');
+console.log(checkboxes);
+let checkedItems = [];
+// Attach event listener to each checkbox
+checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('change', function (event) {
+        if (event.target.checked) {
+            console.log("Checked:", event.target.value);
+            checkedItems.push(event.target.value);
+            console.log("Checked:", checkedItems);
+        } else {
+            console.log("Unchecked:", event.target.value);
+            const index = checkedItems.indexOf(event.target.value);
+            if (index > -1) { // only splice array when item is found
+                checkedItems.splice(index, 1); // 2nd parameter means remove one item only
+            }
+            // checkedItems.pop();
+            console.log("Checked:", checkedItems);
+        }
+        GetCategoryFilter(checkedItems);
+    });
+});
+
+
 

@@ -15,38 +15,20 @@
             <div class="col-lg-3 col-md-12">
                 <!-- Price Start -->
                 <div class="border-bottom mb-4 pb-4">
-                    <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
+                    <h5 class="font-weight-semi-bold mb-4">Filter by Category</h5>
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" checked id="price-all">
-                            <label class="custom-control-label" for="price-all">All Price</label>
-                            <span class="badge border font-weight-normal">1000</span>
+                            <label class="custom-control-label" for="price-all">All Category</label>
+                            <span class="badge border font-weight-normal">{{ all_product_count }}</span>
                         </div>
+                        {% for item in categories %}
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-1">
-                            <label class="custom-control-label" for="price-1">$0 - $100</label>
-                            <span class="badge border font-weight-normal">150</span>
+                            <input type="checkbox" name="category" value="{{ item.title }}" class="custom-control-input" id="{{item.id}}">
+                            <label class="custom-control-label" for="{{item.id}}">{{ item.title|title }}</label>
+                            <span class="badge border font-weight-normal">{{ item.product_count }}</span>
                         </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-2">
-                            <label class="custom-control-label" for="price-2">$100 - $200</label>
-                            <span class="badge border font-weight-normal">295</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-3">
-                            <label class="custom-control-label" for="price-3">$200 - $300</label>
-                            <span class="badge border font-weight-normal">246</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-4">
-                            <label class="custom-control-label" for="price-4">$300 - $400</label>
-                            <span class="badge border font-weight-normal">145</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                            <input type="checkbox" class="custom-control-input" id="price-5">
-                            <label class="custom-control-label" for="price-5">$400 - $500</label>
-                            <span class="badge border font-weight-normal">168</span>
-                        </div>
+                        {% endfor %}
                     </form>
                 </div>
                 <!-- Price End -->
@@ -156,13 +138,13 @@
                             </div>
                         </div>
                     </div>
-                    {% for item in items %}
+                    {% comment %} {% for item in items %}
                     <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                         {% include 'eshop/product_card.html' %}
                     </div>
                     {% endfor %}
                     <span>Showing {{items.count}} entries</span>
-                    {% include 'eshop/paginator.html' with items=page_obj %}
+                    {% include 'eshop/paginator.html' with items=page_obj %} {% endcomment %}
                     
                 </div>
             </div>

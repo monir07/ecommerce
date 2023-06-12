@@ -14,6 +14,7 @@ const validateFormAndCheckout = () => {
     }).then(data => {
         if (data.success) {
             console.log("Success Submitted");
+            window.location.href = '/shop/product-list/';
         }
         else {
             console.log(data);

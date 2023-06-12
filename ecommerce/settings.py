@@ -31,7 +31,7 @@ DEFAULTS_APPS = [
     'django.contrib.staticfiles',
 ]
 LOCAL_APPS = ['account', 'eshop', 'cart', 'order']
-THIRD_PARTY_APPS = ['crispy_forms']
+THIRD_PARTY_APPS = ['crispy_forms', 'rest_framework']
 INSTALLED_APPS = DEFAULTS_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
